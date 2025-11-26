@@ -5,6 +5,8 @@ import SignInPage from '../pages/SignInPage/SignInPage';
 import SignUpPage from '../pages/SignUpPage/SignUpPage';
 import { useEffect, useState } from 'react';
 import { axiosInstance, setAccessToken } from '../shared/lib/axiosInstance';
+import Footer from "../components/layout/Footer";
+
 
 export default function App() {
   const [user, setUser] = useState(null);
@@ -30,6 +32,8 @@ export default function App() {
         <Route path="/signUp" element={<SignUpPage setUser={setUser} />} />
         <Route path="/signIn" element={<SignInPage setUser={setUser} />} />
       </Routes>
+
+      <Footer />
     </div>
   );
 }

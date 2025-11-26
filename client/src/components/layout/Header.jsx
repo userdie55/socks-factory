@@ -37,10 +37,10 @@ export default function Header({user}) {
         ) : (
           <div className="flex gap-4 text-sm text-gray-600">
             <Link to="/signIn" className="hover:text-pink-500 transition">
-              Sign In
+              Войти 
             </Link>
             <Link to="/signUp" className="hover:text-blue-500 transition">
-              Sign Up
+              Зарегистрироваться
             </Link>
           </div>
         )}
