@@ -1,10 +1,6 @@
 import { Link } from 'react-router-dom';
-import { useContext } from 'react';
-import { UserContext } from '../../context/UserContext';
 
-export default function Header() {
-  const { user, setUser } = useContext(UserContext);
-
+export default function Header({user}) {
   return (
     <header className="bg-white/90 backdrop-blur-md shadow-sm border-b border-gray-200">
       <div className="mx-auto max-w-7xl px-6 py-4 flex justify-between items-center">
@@ -33,7 +29,7 @@ export default function Header() {
             <span className="text-pink-500 font-medium">Привет, {user.name}</span>
             <button
               className="text-gray-500 hover:text-red-500 transition"
-              onClick={() => setUser(null)}
+              onClick={() => setUser(null)} /////<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
             >
               Logout
             </button>

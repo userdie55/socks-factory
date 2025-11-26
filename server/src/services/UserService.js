@@ -4,7 +4,7 @@ class UserService {
   static async createUser(data) {
     try {
       const user = await User.create(data);
-      delete user.password;
+      // delete user.password;
       return user.get();
     } catch (error) {
       return error.message;

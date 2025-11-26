@@ -87,7 +87,9 @@ module.exports = (sequelize, DataTypes) => {
           user.password = await bcrypt.hash(user.password, 10);
           user.email = user.email.trim().toLowerCase();
         },
-        afterCreate: {},
+        afterCreate: (user) => {
+          delete user.get().password
+        },
       },
       modelName: 'User',
     },

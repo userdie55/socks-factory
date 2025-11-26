@@ -1,22 +1,35 @@
-import Header from "../components/layout/Header";
-import HomePage from "../pages/HomePage";
-import { Routes, Route } from "react-router-dom";
-import SignInPage from "../pages/SignInPage";
-import SignUpPage from "../pages/SignUpPage";
+import Header from '../components/layout/Header';
+import HomePage from '../pages/HomePage/HomePage';
+import { Routes, Route } from 'react-router-dom';
+import SignInPage from '../pages/SignInPage/SignInPage';
+import SignUpPage from '../pages/SignUpPage/SignUpPage';
+import { useEffect, useState } from 'react';
+import { axiosInstance, setAccessToken } from '../shared/lib/axiosInstance';
 
 export default function App() {
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const response = await axiosInstance.get('/auth/refreshToken');
+        setUser(response.data.user);
+        setAccessToken(response.data.accessToken);
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, []);
+
   return (
     <div>
-      <Header />
+      <Header user={user}/>
 
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/signIn" element={<SignInPage />} />
-        <Route path="/signUp" element={<SignUpPage />} />
-
+        <Route path="/signUp" element={<SignUpPage setUser={setUser} />} />
+        <Route path="/signIn" element={<SignInPage setUser={setUser} />} />
       </Routes>
     </div>
   );
 }
-
-

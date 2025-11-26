@@ -1,14 +1,30 @@
 import { useState } from 'react';
-import { useContext } from 'react';
-import { UserContext } from '../context/UserContext';
+import { axiosInstance, setAccessToken } from '../../shared/lib/axiosInstance';
 import { useNavigate } from 'react-router-dom';
 
-export default function SignUpPage() {
-  const { setUser } = useContext(UserContext);
+export default function SignUpForm({setUser}) {
   const navigate = useNavigate();
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [inputs, setInputs] = useState({});
+
+  function onChangeHandler(event) {
+    return setInputs((prev) => ({ ...prev, [event.target.name]: event.target.value }));
+  }
+
+  async function registrationHandler(event) {
+    try {
+      event.preventDefault();
+
+      const response = await axiosInstance.post('/auth/signUp', inputs);
+
+      setUser(response.data.user);
+      setAccessToken(response.data.accessToken);
+
+      navigate('/');
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  
 
   return (
     <div className="min-h-screen flex justify-center items-center">
@@ -17,35 +33,30 @@ export default function SignUpPage() {
 
         <form
           className="flex flex-col gap-4"
-          onSubmit={(e) => {
-            e.preventDefault();
-            setUser({ name, email });
-            localStorage.setItem('user', JSON.stringify({ name, email }));
-            navigate('/');
-          }}
+          onSubmit={registrationHandler}
         >
           <input
             type="text"
             placeholder="Name"
             className="px-4 py-3 rounded-xl bg-white border border-gray-300 focus:border-blue-400 outline-none shadow-sm"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+            name="name"
+            onChange={onChangeHandler}
           />
 
           <input
             type="email"
             placeholder="Email"
             className="px-4 py-3 rounded-xl bg-white border border-gray-300 focus:border-pink-400 outline-none shadow-sm"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            name="email"
+            onChange={onChangeHandler}
           />
 
           <input
             type="password"
             placeholder="Password"
             className="px-4 py-3 rounded-xl bg-white border border-gray-300 focus:border-purple-400 outline-none shadow-sm"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            name="password"
+            onChange={onChangeHandler}
           />
 
           <button
