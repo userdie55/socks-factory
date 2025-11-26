@@ -1,0 +1,16 @@
+@import 'tailwindcss';
+
+@theme {
+  --font-sans: 'Inter', system-ui, sans-serif;
+
+  --color-bg: #f5f7fa;
+  --color-border: #e3e8ef;
+  --color-accent: #ff6fb1;
+}
+
+body {
+  margin: 0;
+  background: linear-gradient(135deg, #f5f7fa 0%, #e8f0ff 40%, #ffeef7 100%);
+  color: #1e1e2d;
+  font-family: var(--font-sans);
+}
