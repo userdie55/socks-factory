@@ -3,7 +3,9 @@ const bcrypt = require('bcrypt');
 
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
-    static associate(models) {}
+    static associate(models) {
+      this.hasMany(models.SocksDesign, { foreignKey: 'user_id' });
+    }
 
     static validateEmail(email) {
       const emailPattern = /^[A-z0-9._%+-]+@[A-z0-9.-]+\.[A-z]{2,}$/;
