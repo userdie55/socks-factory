@@ -1,6 +1,6 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('SocksDesigns', {
+    await queryInterface.createTable('Carts', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -10,21 +10,6 @@ module.exports = {
       user_id: {
         type: Sequelize.INTEGER,
         references: { model: 'Users', key: 'id' },
-        onDelete: 'CASCADE'
-      },
-      color_id: {
-        type: Sequelize.INTEGER,
-        references: { model: 'Colors', key: 'id' },
-        onDelete: 'CASCADE'
-      },
-      image_id: {
-        type: Sequelize.INTEGER,
-        references: { model: 'Images', key: 'id' },
-        onDelete: 'CASCADE'
-      },
-      pattern_id: {
-        type: Sequelize.INTEGER,
-        references: { model: 'Patterns', key: 'id' },
         onDelete: 'CASCADE'
       },
       createdAt: {
@@ -40,6 +25,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('SocksDesigns');
+    await queryInterface.dropTable('Carts');
   },
 };

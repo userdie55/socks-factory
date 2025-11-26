@@ -6,6 +6,7 @@ module.exports = (sequelize, DataTypes) => {
       this.belongsTo(models.Color, { foreignKey: 'color_id' });
       this.belongsTo(models.Image, { foreignKey: 'image_id' });
       this.belongsTo(models.Pattern, { foreignKey: 'pattern_id' });
+      this.hasMany(models.CartItem, { foreignKey: 'design_id' });
     }
   }
   SocksDesign.init(

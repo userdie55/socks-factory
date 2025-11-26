@@ -5,6 +5,8 @@ module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     static associate(models) {
       this.hasMany(models.SocksDesign, { foreignKey: 'user_id' });
+      this.hasMany(models.Favorite, { foreignKey: 'user_id' });
+      this.hasOne(models.Cart, { foreignKey: 'user_id' });
     }
 
     static validateEmail(email) {

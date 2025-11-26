@@ -1,31 +1,26 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('SocksDesigns', {
+    await queryInterface.createTable('CartItems', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      user_id: {
+      cart_id: {
         type: Sequelize.INTEGER,
-        references: { model: 'Users', key: 'id' },
+        references: { model: 'Carts', key: 'id' },
         onDelete: 'CASCADE'
       },
-      color_id: {
+      design_id: {
         type: Sequelize.INTEGER,
-        references: { model: 'Colors', key: 'id' },
+        references: { model: 'SocksDesigns', key: 'id' },
         onDelete: 'CASCADE'
       },
-      image_id: {
+      quantity: {
         type: Sequelize.INTEGER,
-        references: { model: 'Images', key: 'id' },
-        onDelete: 'CASCADE'
-      },
-      pattern_id: {
-        type: Sequelize.INTEGER,
-        references: { model: 'Patterns', key: 'id' },
-        onDelete: 'CASCADE'
+        allowNull: false,
+        defaultValue: 1,
       },
       createdAt: {
         allowNull: false,
@@ -40,6 +35,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('SocksDesigns');
+    await queryInterface.dropTable('CartItems');
   },
 };
