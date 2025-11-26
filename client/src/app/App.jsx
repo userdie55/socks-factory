@@ -1,35 +1,39 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import Header from '../components/layout/Header';
+import HomePage from '../pages/HomePage/HomePage';
+import { Routes, Route } from 'react-router-dom';
+import SignInPage from '../pages/SignInPage/SignInPage';
+import SignUpPage from '../pages/SignUpPage/SignUpPage';
+import { useEffect, useState } from 'react';
+import { axiosInstance, setAccessToken } from '../shared/lib/axiosInstance';
+import Footer from "../components/layout/Footer";
 
-function App() {
-  const [count, setCount] = useState(0)
+
+export default function App() {
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const response = await axiosInstance.get('/auth/refreshToken');
+        setUser(response.data.user);
+        setAccessToken(response.data.accessToken);
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, []);
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <div>
+      <Header user={user}/>
 
-export default App
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/signUp" element={<SignUpPage setUser={setUser} />} />
+        <Route path="/signIn" element={<SignInPage setUser={setUser} />} />
+      </Routes>
+
+      <Footer />
+    </div>
+  );
+}
