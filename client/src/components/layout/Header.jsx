@@ -16,7 +16,7 @@ import {
 
 import { Link } from 'react-router-dom';
 
-export default function Header({ user }) {
+export default function Header({ user, setCartOpen }) {
   return (
     <Disclosure as="nav" className="bg-white/90 backdrop-blur-md shadow-sm border-b border-gray-200">
       <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
@@ -63,15 +63,16 @@ export default function Header({ user }) {
           {/* RIGHT BLOCK: Cart, Favorites, Profile */}
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
             {/* Cart */}
-            <Link
-              to="/cart"
+            <button
+             
+              onClick={() => setCartOpen(true)}
               type="button"
               className="relative rounded-full p-1 text-gray-400 focus:outline-2 focus:outline-offset-2 focus:outline-indigo-500"
             >
               <span className="absolute -inset-1.5" />
               <span className="sr-only">Cart</span>
               <ShoppingCartIcon aria-hidden="true" className="size-6" />
-            </Link>
+            </button>
 
             {/* Favorites */}
             <Link
