@@ -15,9 +15,10 @@ import {
 } from '@heroicons/react/24/outline';
 
 import logo from '../../assets/logo.png';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export default function Header({ user, setCartOpen }) {
+   const navigate = useNavigate();
   return (
     <Disclosure
       as="nav"
@@ -44,11 +45,7 @@ export default function Header({ user, setCartOpen }) {
           <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
             {/* Logo */}
             <Link to="/">
-              <img
-                alt=""
-                src={logo}
-                className="w-36 h-auto"
-              />
+              <img alt="" src={logo} className="w-36 h-auto" />
             </Link>
 
             {/* DESKTOP MENU */}
@@ -68,26 +65,53 @@ export default function Header({ user, setCartOpen }) {
           {/* RIGHT BLOCK: Cart, Favorites, Profile */}
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
             {/* Cart */}
-            <button
-              onClick={() => setCartOpen(true)}
-              type="button"
-              className="relative rounded-full p-1 text-gray-400 focus:outline-2 focus:outline-offset-2 focus:outline-indigo-500"
-            >
-              <span className="absolute -inset-1.5" />
-              <span className="sr-only">Cart</span>
-              <ShoppingCartIcon aria-hidden="true" className="size-6" />
-            </button>
 
             {/* Favorites */}
-            <Link
-              to="/favorites"
-              type="button"
-              className="relative rounded-full p-1 text-gray-400 focus:outline-2 focus:outline-offset-2 focus:outline-indigo-500"
-            >
-              <span className="absolute -inset-1.5" />
-              <span className="sr-only">Favorites</span>
-              <HeartIcon aria-hidden="true" className="size-6" />
-            </Link>
+            {user ? (
+              <>
+                <Link
+                  to="/favorites"
+                  type="button"
+                  className="relative rounded-full p-1 text-gray-400 focus:outline-2 focus:outline-offset-2 focus:outline-indigo-500"
+                >
+                  <span className="absolute -inset-1.5" />
+                  <span className="sr-only">Favorites</span>
+                  <HeartIcon aria-hidden="true" className="size-6" />
+                </Link>
+
+                <button
+                  onClick={() => setCartOpen(true)}
+                  type="button"
+                  className="relative rounded-full p-1 text-gray-400 focus:outline-2 focus:outline-offset-2 focus:outline-indigo-500"
+                >
+                  <span className="absolute -inset-1.5" />
+                  <span className="sr-only">Cart</span>
+                  <ShoppingCartIcon aria-hidden="true" className="size-6" />
+                </button>
+              </>
+            ) : (
+              <>
+                <Link
+                  to="/signIn"
+                  type="button"
+                  className="relative rounded-full p-1 text-gray-400 focus:outline-2 focus:outline-offset-2 focus:outline-indigo-500"
+                >
+                  <span className="absolute -inset-1.5" />
+                  <span className="sr-only">Favorites</span>
+                  <HeartIcon aria-hidden="true" className="size-6" />
+                </Link>
+
+                <button
+                  onClick={() => navigate('/signIn')}
+                  type="button"
+                  className="relative rounded-full p-1 text-gray-400 focus:outline-2 focus:outline-offset-2 focus:outline-indigo-500"
+                >
+                  <span className="absolute -inset-1.5" />
+                  <span className="sr-only">Cart</span>
+                  <ShoppingCartIcon aria-hidden="true" className="size-6" />
+                </button>
+              </>
+            )}
 
             {/* Profile menu */}
 

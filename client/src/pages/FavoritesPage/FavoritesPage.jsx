@@ -1,20 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-// import { getFavorites } from '../../services/favorites';
 
 export default function FavoritesPage() {
   const [favorites, setFavorites] = useState([]);
-
-  useEffect(() => {
-    (async () => {
-      try {
-        const data = await getFavorites();
-        setFavorites(Array.isArray(data.favorites) ? data.favorites : []);
-      } catch (err) {
-        console.log(err);
-      }
-    })();
-  }, []);
 
   return (
     <div className="min-h-screen pt-20">

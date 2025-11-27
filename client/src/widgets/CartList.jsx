@@ -34,14 +34,14 @@ export default function CartList({ user }) {
             <div>
               <div className="flex justify-between text-base font-medium text-gray-900">
                 <h3>
-                  <a href={product.href}>{product.id}</a>
+                  <a href={product.href}>Носки</a>
                 </h3>
                 <p className="ml-4">{product.quantity}</p>
               </div>
-              <p className="mt-1 text-sm text-gray-500">{product.design.color_id}</p>
+              <p className="mt-1 text-sm text-gray-500">{product.design.Color.title}, {product.design.Pattern.title}</p>
             </div>
             <div className="flex flex-1 items-end justify-between text-sm">
-              <p className="text-gray-500">Qty {product.quantity}</p>
+              <p className="text-gray-500">Кол-во {product.quantity}</p>
 
               <div className="flex">
                 <button

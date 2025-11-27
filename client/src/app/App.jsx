@@ -7,6 +7,9 @@ import { useEffect, useState } from 'react';
 import { axiosInstance, setAccessToken } from '../shared/lib/axiosInstance';
 import Footer from '../components/layout/Footer';
 import Cart from '../components/layout/Cart';
+import FavoritesPage from '../pages/FavoritesPage/FavoritesPage';
+import ConfiguratorPage from '../pages/ConfiguratorPage/ConfiguratorPage';
+import SignOutPage from '../pages/SignOutPage/SignOutPage';
 
 export default function App() {
   const [cartOpen, setCartOpen] = useState(false);
@@ -31,8 +34,11 @@ export default function App() {
 
       <Routes>
         <Route path="/" element={<HomePage />} />
+        <Route path="/configurator" element={<ConfiguratorPage />} />
+        <Route path="/favorites" element={<FavoritesPage />} />
         <Route path="/signUp" element={<SignUpPage setUser={setUser} />} />
         <Route path="/signIn" element={<SignInPage setUser={setUser} />} />
+        <Route path="/signOut" element={<SignOutPage setUser={setUser} />} />
       </Routes>
 
       <Footer />
