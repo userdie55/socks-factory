@@ -12,6 +12,7 @@ import ConfiguratorPage from "../pages/ConfiguratorPage/ConfiguratorPage";
 
 
 export default function App() {
+  const [cartOpen, setCartOpen] = useState(false);
   const [user, setUser] = useState(null);
 
   useEffect(() => {
@@ -28,7 +29,8 @@ export default function App() {
 
   return (
     <div>
-      <Header user={user}/>
+      <Header user={user} setCartOpen={setCartOpen} />
+      <Cart open={cartOpen} setOpen={setCartOpen} user={user} />
 
       <Routes>
         <Route path="/" element={<HomePage />} />

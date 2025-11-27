@@ -41,6 +41,7 @@ export default function SignUpForm({ setUser }) {
             className="px-4 py-3 rounded-xl bg-white border border-gray-300 focus:border-blue-400 outline-none shadow-sm"
             name="name"
             onChange={onChangeHandler}
+            autoFocus={true}
           />
 
           <input
