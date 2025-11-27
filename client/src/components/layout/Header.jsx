@@ -14,11 +14,15 @@ import {
   XMarkIcon,
 } from '@heroicons/react/24/outline';
 
+import logo from '../../assets/logo.png';
 import { Link } from 'react-router-dom';
 
-export default function Header({ user }) {
+export default function Header({ user, setCartOpen }) {
   return (
-    <Disclosure as="nav" className="bg-white/90 backdrop-blur-md shadow-sm border-b border-gray-200">
+    <Disclosure
+      as="nav"
+      className="bg-white/90 backdrop-blur-md shadow-sm border-b border-gray-200"
+    >
       <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
         <div className="relative flex h-16 items-center justify-between">
           {/* Mobile menu button */}
@@ -39,12 +43,13 @@ export default function Header({ user }) {
 
           <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
             {/* Logo */}
-            <Link
-          to="/"
-          className="text-lg font-bold text-pink-500 hover:text-pink-600 transition"
-        >
-          SocksLab
-        </Link>
+            <Link to="/">
+              <img
+                alt=""
+                src={logo}
+                className="w-36 h-auto"
+              />
+            </Link>
 
             {/* DESKTOP MENU */}
             <div className="hidden sm:ml-6 sm:block">
@@ -63,15 +68,15 @@ export default function Header({ user }) {
           {/* RIGHT BLOCK: Cart, Favorites, Profile */}
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
             {/* Cart */}
-            <Link
-              to="/cart"
+            <button
+              onClick={() => setCartOpen(true)}
               type="button"
               className="relative rounded-full p-1 text-gray-400 focus:outline-2 focus:outline-offset-2 focus:outline-indigo-500"
             >
               <span className="absolute -inset-1.5" />
               <span className="sr-only">Cart</span>
               <ShoppingCartIcon aria-hidden="true" className="size-6" />
-            </Link>
+            </button>
 
             {/* Favorites */}
             <Link
@@ -164,55 +169,3 @@ export default function Header({ user }) {
     </Disclosure>
   );
 }
-
-// import { Link } from 'react-router-dom';
-
-// export default function Header({user}) {
-//   return (
-
-//     <header className="bg-white/90 backdrop-blur-md shadow-sm border-b border-gray-200">
-//       <div className="mx-auto max-w-7xl px-6 py-4 flex justify-between items-center">
-
-//         <Link
-//           to="/"
-//           className="text-lg font-bold text-pink-500 hover:text-pink-600 transition"
-//         >
-//           SocksLab
-//         </Link>
-
-//         <nav className="hidden md:flex gap-6 text-sm text-gray-600">
-//           <span className="px-3 py-2 rounded-md hover:bg-pink-50 hover:text-pink-500 cursor-pointer transition">
-//             Конфигуратор
-//           </span>
-//           <span className="px-3 py-2 rounded-md hover:bg-blue-50 hover:text-blue-500 cursor-pointer transition">
-//             Избранное
-//           </span>
-//           <span className="px-3 py-2 rounded-md hover:bg-lime-50 hover:text-lime-600 cursor-pointer transition">
-//             Корзина
-//           </span>
-//         </nav>
-
-//         {user ? (
-//           <div className="flex items-center gap-4">
-//             <span className="text-pink-500 font-medium">Привет, {user.name}</span>
-//             <button
-//               className="text-gray-500 hover:text-red-500 transition"
-//               onClick={() => setUser(null)} /////<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-//             >
-//               Logout
-//             </button>
-//           </div>
-//         ) : (
-//           <div className="flex gap-4 text-sm text-gray-600">
-//             <Link to="/signIn" className="hover:text-pink-500 transition">
-//               Войти
-//             </Link>
-//             <Link to="/signUp" className="hover:text-blue-500 transition">
-//               Зарегистрироваться
-//             </Link>
-//           </div>
-//         )}
-//       </div>
-//     </header>
-//   );
-// }
