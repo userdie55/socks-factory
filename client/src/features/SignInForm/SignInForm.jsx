@@ -14,7 +14,7 @@ export default function SignInForm({ setUser }) {
     try {
       event.preventDefault();
 
-      const response = await axiosInstance.post('/auth/signIn', inputs);
+      const response = await axiosInstance.post('http://localhost:3000/api/auth/signin', inputs);
 
       setUser(response.data.user);
       setAccessToken(response.data.accessToken);
@@ -50,7 +50,8 @@ export default function SignInForm({ setUser }) {
 
           <button
             type="submit"
-            className="mt-4 px-6 py-3 rounded-full bg-gradient-to-r from-pink-400 via-purple-400 to-blue-400 text-white font-semibold shadow-md hover:shadow-lg transition"
+            className="px-8 py-3 rounded-full bg-gradient-to-r from-pink-400 via-purple-400 to-blue-400 text-white font-semibold
+           shadow-md transition transform hover:scale-105 hover:shadow-xl hover:shadow-pink-400/40"
           >
             Войти
           </button>
