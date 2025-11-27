@@ -27,7 +27,7 @@ export default function App() {
   return (
     <div>
       <Header user={user} setCartOpen={setCartOpen} />
-      <Cart open={cartOpen} setOpen={setCartOpen} />
+      <Cart open={cartOpen} setOpen={setCartOpen} user={user} />
 
       <Routes>
         <Route path="/" element={<HomePage />} />
