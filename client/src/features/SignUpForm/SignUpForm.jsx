@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { axiosInstance, setAccessToken } from '../../shared/lib/axiosInstance';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export default function SignUpForm({setUser}) {
   const navigate = useNavigate();
@@ -67,6 +67,16 @@ export default function SignUpForm({setUser}) {
             Зарегистрироваться
           </button>
         </form>
+
+        <div className="mt-6 text-center text-gray-600">
+          Уже есть аккаунт?{' '}
+          <Link
+            to={'/signIn'}
+            className="font-semibold text-pink-500 hover:text-pink-600 transition underline underline-offset-2"
+          >
+            Войти
+          </Link>
+        </div>
       </div>
     </div>
   );
