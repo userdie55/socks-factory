@@ -84,6 +84,16 @@ class UserController {
       return res.status(400).json({ error: message });
     }
   }
+
+  static async getUserCart(req, res) {
+    try {
+      const {id} = req.params
+      const cart = await UserService.getUserCart(id)
+      return res.status(200).json({cart})
+    } catch (error) {
+       return res.status(400).json({ error: message });
+    }
+  }
 }
 
 module.exports = UserController;

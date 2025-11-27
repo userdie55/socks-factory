@@ -37,6 +37,7 @@ export default function SignInForm({ setUser }) {
             className="px-4 py-3 rounded-xl bg-white border border-gray-300 focus:border-pink-400 outline-none shadow-sm"
             name="email"
             onChange={onChangeHandler}
+            autoFocus={true}
           />
 
           <input

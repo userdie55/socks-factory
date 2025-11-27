@@ -5,10 +5,11 @@ import SignInPage from '../pages/SignInPage/SignInPage';
 import SignUpPage from '../pages/SignUpPage/SignUpPage';
 import { useEffect, useState } from 'react';
 import { axiosInstance, setAccessToken } from '../shared/lib/axiosInstance';
-import Footer from "../components/layout/Footer";
-
+import Footer from '../components/layout/Footer';
+import Cart from '../components/layout/Cart';
 
 export default function App() {
+  const [cartOpen, setCartOpen] = useState(false);
   const [user, setUser] = useState(null);
 
   useEffect(() => {
@@ -25,7 +26,8 @@ export default function App() {
 
   return (
     <div>
-      <Header user={user}/>
+      <Header user={user} setCartOpen={setCartOpen} />
+      <Cart open={cartOpen} setOpen={setCartOpen} user={user} />
 
       <Routes>
         <Route path="/" element={<HomePage />} />
