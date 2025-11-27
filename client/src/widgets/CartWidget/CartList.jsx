@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { axiosInstance } from '../shared/lib/axiosInstance';
+import { axiosInstance } from '../../shared/lib/axiosInstance';
 
 export default function CartList({ user }) {
   const [cart, setCart] = useState([]);

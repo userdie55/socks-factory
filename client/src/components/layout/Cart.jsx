@@ -1,6 +1,6 @@
 import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react';
 import { XMarkIcon } from '@heroicons/react/24/outline';
-import CartList from '../../widgets/CartList';
+import CartList from '../../widgets/CartWidget/CartList';
 
 export default function Cart({ open, setOpen, user }) {
   return (
