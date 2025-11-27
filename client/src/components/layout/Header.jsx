@@ -16,9 +16,9 @@ import {
 
 import { Link } from 'react-router-dom';
 
-export default function Header({user}) {
+export default function Header({ user }) {
   return (
-    <Disclosure as="nav" className="relative bg-gray-800">
+    <Disclosure as="nav" className="bg-white/90 backdrop-blur-md shadow-sm border-b border-gray-200">
       <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
         <div className="relative flex h-16 items-center justify-between">
           {/* Mobile menu button */}
@@ -39,13 +39,12 @@ export default function Header({user}) {
 
           <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
             {/* Logo */}
-            <Link to="/" className="flex shrink-0 items-center">
-              <img
-                alt="Your Company"
-                src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500"
-                className="h-8 w-auto"
-              />
-            </Link>
+            <Link
+          to="/"
+          className="text-lg font-bold text-pink-500 hover:text-pink-600 transition"
+        >
+          SocksLab
+        </Link>
 
             {/* DESKTOP MENU */}
             <div className="hidden sm:ml-6 sm:block">
@@ -53,7 +52,7 @@ export default function Header({user}) {
                 <Link
                   to="/configurator"
                   aria-current="page"
-                  className="bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium"
+                  className="px-3 py-2 rounded-md hover:bg-pink-50 hover:text-pink-500 cursor-pointer transition"
                 >
                   Конфигуратор
                 </Link>
@@ -64,7 +63,8 @@ export default function Header({user}) {
           {/* RIGHT BLOCK: Cart, Favorites, Profile */}
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
             {/* Cart */}
-            <Link to='/cart'
+            <Link
+              to="/cart"
               type="button"
               className="relative rounded-full p-1 text-gray-400 focus:outline-2 focus:outline-offset-2 focus:outline-indigo-500"
             >
@@ -74,7 +74,8 @@ export default function Header({user}) {
             </Link>
 
             {/* Favorites */}
-            <Link to='/favorites'
+            <Link
+              to="/favorites"
               type="button"
               className="relative rounded-full p-1 text-gray-400 focus:outline-2 focus:outline-offset-2 focus:outline-indigo-500"
             >
@@ -85,7 +86,6 @@ export default function Header({user}) {
 
             {/* Profile menu */}
 
-            
             <Menu as="div" className="relative ml-3">
               <MenuButton className="relative flex rounded-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">
                 <span className="absolute -inset-1.5" />
@@ -97,35 +97,52 @@ export default function Header({user}) {
                 />
               </MenuButton>
 
-              <MenuItems
-                transition
-                className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg outline outline-black/5 transition"
-              >
-                <MenuItem>
-                  <a
-                    href="#"
-                    className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100"
-                  >
-                    Your profile
-                  </a>
-                </MenuItem>
-                <MenuItem>
-                  <a
-                    href="#"
-                    className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100"
-                  >
-                    Settings
-                  </a>
-                </MenuItem>
-                <MenuItem>
-                  <a
-                    href="#"
-                    className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100"
-                  >
-                    Sign out
-                  </a>
-                </MenuItem>
-              </MenuItems>
+              {user ? (
+                <MenuItems
+                  transition
+                  className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg outline outline-black/5 transition"
+                >
+                  <MenuItem>
+                    <a
+                      href="#"
+                      className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100"
+                    >
+                      Профиль
+                    </a>
+                  </MenuItem>
+                  <MenuItem>
+                    <Link
+                      to="/signOut"
+                      href="#"
+                      className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100"
+                    >
+                      Выйти
+                    </Link>
+                  </MenuItem>
+                </MenuItems>
+              ) : (
+                <MenuItems
+                  transition
+                  className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg outline outline-black/5 transition"
+                >
+                  <MenuItem>
+                    <Link
+                      to="/signUp"
+                      className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100"
+                    >
+                      Зарегистрироваться
+                    </Link>
+                  </MenuItem>
+                  <MenuItem>
+                    <Link
+                      to="/signIn"
+                      className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100"
+                    >
+                      Войти
+                    </Link>
+                  </MenuItem>
+                </MenuItems>
+              )}
             </Menu>
           </div>
         </div>
