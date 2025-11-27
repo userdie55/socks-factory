@@ -28,8 +28,8 @@ class UserController {
 
     try {
       const userFound = await UserService.getUserByEmail(email.toLowerCase());
-
-      if (userFound.email) {
+  
+      if (userFound) {
         return res.status(400).json({ error: 'User with this email already exists' });
       }
 
@@ -78,20 +78,22 @@ class UserController {
   }
 
   static async signOutUser(req, res) {
-    try {
-      return res.sendStatus(200).clearCookie('refreshToken');
-    } catch (message) {
-      return res.status(400).json({ error: message });
-    }
+  try {
+    res.clearCookie('refreshToken');
+    return res.sendStatus(200);
+  } catch (error) {
+    return res.status(400).json({ error: error.message });
   }
+}
+
 
   static async getUserCart(req, res) {
     try {
-      const {id} = req.params
-      const cart = await UserService.getUserCart(id)
-      return res.status(200).json({cart})
+      const { id } = req.params;
+      const cart = await UserService.getUserCart(id);
+      return res.status(200).json({ cart });
     } catch (error) {
-       return res.status(400).json({ error: message });
+      return res.status(400).json({ error: message });
     }
   }
 }

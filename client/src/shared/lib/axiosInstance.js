@@ -32,7 +32,7 @@ axiosInstance.interceptors.response.use(
         if (error.response?.status === 403 && !prevRequest.sent) {
             try {
                 // запрос на обновление токенов
-                const response = await axiosInstance.get('/auth/refreshTokens');
+                const response = await axiosInstance.get('/auth/refreshToken');
                 const newAccessToken = response.data.data.accessToken;
 
                 // обновляем токен

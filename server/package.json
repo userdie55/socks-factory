@@ -8,7 +8,8 @@
     "db:drop": "npx sequelize db:drop",
     "db:create": "npx sequelize db:create",
     "db:migrate": "npx sequelize db:migrate:undo:all && npx sequelize db:migrate",
-    "db:seed": "npx sequelize db:seed:undo:all && npx sequelize db:seed:all"
+    "db:seed": "npx sequelize db:seed:undo:all && npx sequelize db:seed:all",
+    "db:reset": "sequelize db:drop && sequelize db:create && sequelize db:migrate && sequelize db:seed:all"
   },
   "keywords": [],
   "author": "",

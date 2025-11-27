@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       this.hasMany(models.SocksDesign, { foreignKey: 'user_id' });
       this.hasMany(models.Favorite, { foreignKey: 'user_id' });
-      this.hasOne(models.Cart, { foreignKey: 'user_id', as: 'cart'});
+      this.hasOne(models.Cart, { foreignKey: 'user_id', as: 'cart' });
     }
 
     static validateEmail(email) {
@@ -15,88 +15,72 @@ module.exports = (sequelize, DataTypes) => {
     }
 
     static validatePassword(password) {
-      const hasUpperCase = /[A-Z]/;
-      const hasLowerCase = /[a-z]/;
-      const hasNumbers = /\d/;
-      const hasSpecialCharacters = /[!@#$%^&*()-,.?":{}|<>]/;
-      const isValidLength = password.length >= 8;
+      const hasUpper = /[A-Z]/;
+      const hasLower = /[a-z]/;
+      const hasNum = /\d/;
+      const hasSpecial = /[!@#$%^&*()\-_.?":{}|<>]/;
+      const isLong = password.length >= 8;
 
-      if (!hasUpperCase.test(password) || !hasLowerCase.test(password) || !hasNumbers.test(password) || !hasSpecialCharacters.test(password) || !isValidLength) {
-        return false;
-      }
-
-      return true;
+      return hasUpper.test(password) &&
+             hasLower.test(password) &&
+             hasNum.test(password) &&
+             hasSpecial.test(password) &&
+             isLong;
     }
 
     static validateSignInData({ email, password }) {
-      if (!email || typeof email !== 'string' || email.trim().length === 0) {
-        return {
-          isValid: false,
-          error: 'Email should not be empty',
-        };
-      }
+      if (!email?.trim())
+        return { isValid: false, error: 'Email should not be empty' };
 
-      if (!password || typeof password !== 'string' || password.trim().length === 0) {
-        return {
-          isValid: false,
-          error: 'Password should not be empty',
-        };
-      }
+      if (!password?.trim())
+        return { isValid: false, error: 'Password should not be empty' };
 
-      return {
-        isValid: true,
-        error: null,
-      };
+      return { isValid: true, error: null };
     }
 
     static validateSignUpData({ name, email, password }) {
-      if (!name || typeof name !== 'string' || name.trim().length === 0) {
+      if (!name?.trim())
+        return { isValid: false, error: 'Username field should not be empty' };
+
+      if (!email?.trim() || !this.validateEmail(email))
+        return { isValid: false, error: 'Email must be valid' };
+
+      if (!password || !this.validatePassword(password))
         return {
           isValid: false,
-          error: 'Username field should not be empty',
+          error:
+            'Password must contain uppercase, lowercase, number, special char and be at least 8 characters',
         };
-      }
 
-      if (!email || typeof email !== 'string' || email.trim().length === 0 || !this.validateEmail(email)) {
-        return {
-          isValid: false,
-          error: 'Email must be valid',
-        };
-      }
-
-      if (!password || typeof password !== 'string' || password.trim().length === 0 || !this.validatePassword(password)) {
-        return {
-          isValid: false,
-          error: 'Password should not be empty, must contain one uppercase letter, one lowercase letter, one special character, and be at least 8 characters long',
-        };
-      }
-
-      return {
-        isValid: true,
-        error: null,
-      };
+      return { isValid: true, error: null };
     }
   }
 
   User.init(
     {
       name: DataTypes.STRING,
-      email: DataTypes.STRING,
+      email: {
+        type: DataTypes.STRING,
+        unique: true, // ← ДОБАВЛЕНО!
+      },
       password: DataTypes.STRING,
     },
     {
       sequelize,
       hooks: {
         beforeCreate: async (user) => {
-          user.password = await bcrypt.hash(user.password, 10);
           user.email = user.email.trim().toLowerCase();
+          user.password = await bcrypt.hash(user.password, 10);
         },
+
         afterCreate: (user) => {
-          delete user.get().password
+          // Правильное удаление поля
+          delete user.dataValues.password;
         },
       },
       modelName: 'User',
     },
   );
+
   return User;
 };

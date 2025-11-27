@@ -4,24 +4,26 @@ import { useNavigate } from 'react-router-dom';
 
 export default function SignInForm({ setUser }) {
   const navigate = useNavigate();
-  const [inputs, setInputs] = useState({});
+  const [inputs, setInputs] = useState({ email: '', password: '' });
 
   function onChangeHandler(event) {
-    return setInputs((prev) => ({ ...prev, [event.target.name]: event.target.value }));
+    const { name, value } = event.target;
+    setInputs((prev) => ({ ...prev, [name]: value }));
   }
 
   async function authorizationHandler(event) {
+    event.preventDefault();
     try {
-      event.preventDefault();
+      const response = await axiosInstance.post('/auth/signin', inputs);
 
-      const response = await axiosInstance.post('http://localhost:3000/api/auth/signin', inputs);
-
+      // ожидаем { user, accessToken } с бэка
       setUser(response.data.user);
       setAccessToken(response.data.accessToken);
 
       navigate('/');
     } catch (error) {
-      console.log(error);
+      console.log('SIGNIN ERROR RESPONSE:', error.response?.data || error.message);
+      alert(error.response?.data?.error || 'Ошибка входа');
     }
   }
 
@@ -36,8 +38,8 @@ export default function SignInForm({ setUser }) {
             placeholder="Email"
             className="px-4 py-3 rounded-xl bg-white border border-gray-300 focus:border-pink-400 outline-none shadow-sm"
             name="email"
+            value={inputs.email}
             onChange={onChangeHandler}
-            autoFocus={true}
           />
 
           <input
@@ -45,13 +47,13 @@ export default function SignInForm({ setUser }) {
             placeholder="Пароль"
             className="px-4 py-3 rounded-xl bg-white border border-gray-300 focus:border-pink-400 outline-none shadow-sm"
             name="password"
+            value={inputs.password}
             onChange={onChangeHandler}
           />
 
           <button
             type="submit"
-            className="px-8 py-3 rounded-full bg-gradient-to-r from-pink-400 via-purple-400 to-blue-400 text-white font-semibold
-           shadow-md transition transform hover:scale-105 hover:shadow-xl hover:shadow-pink-400/40"
+            className="mt-4 px-6 py-3 rounded-full bg-gradient-to-r from-pink-400 via-purple-400 to-blue-400 text-white font-semibold shadow-md hover:shadow-lg transition"
           >
             Войти
           </button>

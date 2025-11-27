@@ -5,11 +5,10 @@ import SignInPage from '../pages/SignInPage/SignInPage';
 import SignUpPage from '../pages/SignUpPage/SignUpPage';
 import { useEffect, useState } from 'react';
 import { axiosInstance, setAccessToken } from '../shared/lib/axiosInstance';
-import Footer from "../components/layout/Footer";
-import FavoritesPage from "../pages/FavoritesPage/FavoritesPage";
-import ConfiguratorPage from "../pages/ConfiguratorPage/ConfiguratorPage";
-
-
+import Footer from '../components/layout/Footer';
+import FavoritesPage from '../pages/FavoritesPage/FavoritesPage';
+import ConfiguratorPage from '../pages/ConfiguratorPage/ConfiguratorPage';
+import Cart from '../components/layout/Cart';
 
 export default function App() {
   const [cartOpen, setCartOpen] = useState(false);
@@ -28,18 +27,21 @@ export default function App() {
   }, []);
 
   return (
-    <div>
-      <Header user={user} setCartOpen={setCartOpen} />
+    <div className="min-h-screen flex flex-col">
+
+      <Header user={user} setUser={setUser} setCartOpen={setCartOpen} />
       <Cart open={cartOpen} setOpen={setCartOpen} user={user} />
 
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/signUp" element={<SignUpPage setUser={setUser} />} />
-        <Route path="/signIn" element={<SignInPage setUser={setUser} />} />
-        <Route path="/favorites" element={<FavoritesPage />} />
-        <Route path="/configurator" element={<ConfiguratorPage />} />
-
-      </Routes>
+      {/* Контент растягивается, футер прижат вниз */}
+      <main className="flex-grow">
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/signUp" element={<SignUpPage setUser={setUser} />} />
+          <Route path="/signIn" element={<SignInPage setUser={setUser} />} />
+          <Route path="/favorites" element={<FavoritesPage />} />
+          <Route path="/configurator" element={<ConfiguratorPage />} />
+        </Routes>
+      </main>
 
       <Footer />
     </div>
