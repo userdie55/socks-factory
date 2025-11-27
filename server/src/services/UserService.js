@@ -1,4 +1,4 @@
-const { User, Cart, CartItem, SocksDesign } = require('../db/models');
+const { User, Cart, CartItem, SocksDesign, Color, Image, Pattern } = require('../db/models');
 
 class UserService {
   static async createUser(data) {
@@ -33,9 +33,10 @@ class UserService {
                 include: [
                   {
                     model: SocksDesign,
-                    as: 'design'
-                  }
-                ]
+                    as: 'design',
+                    include: [{ model: Color }, { model: Image }, { model: Pattern }],
+                  },
+                ],
               },
             ],
           },
