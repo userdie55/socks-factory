@@ -6,6 +6,9 @@ import SignUpPage from '../pages/SignUpPage/SignUpPage';
 import { useEffect, useState } from 'react';
 import { axiosInstance, setAccessToken } from '../shared/lib/axiosInstance';
 import Footer from "../components/layout/Footer";
+import FavoritesPage from "../pages/FavoritesPage/FavoritesPage";
+import ConfiguratorPage from "../pages/ConfiguratorPage/ConfiguratorPage";
+
 
 
 export default function App() {
@@ -31,6 +34,9 @@ export default function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/signUp" element={<SignUpPage setUser={setUser} />} />
         <Route path="/signIn" element={<SignInPage setUser={setUser} />} />
+        <Route path="/favorites" element={<FavoritesPage />} />
+        <Route path="/configurator" element={<ConfiguratorPage />} />
+
       </Routes>
 
       <Footer />
