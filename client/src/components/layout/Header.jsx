@@ -25,10 +25,8 @@ export default function Header({ user, setCartOpen, setUser }) {
   async function logoutHandler() {
     try {
       await axiosInstance.delete('/auth/signout');
-
       setAccessToken('');
       setUser(null);
-
       navigate('/signIn');
     } catch (err) {
       console.error('LOGOUT ERROR:', err);
@@ -42,23 +40,24 @@ export default function Header({ user, setCartOpen, setUser }) {
     >
       {({ open }) => (
         <>
+          {/* TOP BAR */}
           <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
             <div className="relative flex h-16 items-center justify-between">
 
-              {/* Mobile button */}
+              {/* MOBILE MENU BUTTON */}
               <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
-                <DisclosureButton className="group relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-white/5 hover:text-white focus:outline-2 focus:-outline-offset-1 focus:outline-indigo-500">
-                  <Bars3Icon aria-hidden="true" className="block size-6 group-data-open:hidden" />
-                  <XMarkIcon aria-hidden="true" className="hidden size-6 group-data-open:block" />
+                <DisclosureButton className="group relative p-2 text-gray-400 hover:bg-white/5 hover:text-gray-700 rounded-md">
+                  <Bars3Icon className="block size-6 group-data-open:hidden" />
+                  <XMarkIcon className="hidden size-6 group-data-open:block" />
                 </DisclosureButton>
               </div>
 
-              {/* Logo */}
-              <Link to="/">
+              {/* LOGO */}
+              <Link to="/" className="flex-shrink-0">
                 <img src={logo} alt="logo" className="w-36 h-auto" />
               </Link>
 
-              {/* Desktop menu */}
+              {/* DESKTOP MENU */}
               <div className="hidden sm:flex gap-6 text-gray-700">
                 <Link
                   to="/configurator"
@@ -68,37 +67,56 @@ export default function Header({ user, setCartOpen, setUser }) {
                 </Link>
               </div>
 
-              {/* RIGHT BLOCK */}
-              <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+              {/* RIGHT SIDE ACTIONS */}
+              <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto">
 
-                {/* Cart */}
-                <button
-                  onClick={() => setCartOpen(true)}
-                  type="button"
-                  className="relative rounded-full p-1 text-gray-400 focus:outline-2 focus:outline-offset-2 focus:outline-indigo-500"
-                >
-                  <ShoppingCartIcon className="size-6" />
-                </button>
+                {/* FAVORITES */}
+                {user ? (
+                  <Link
+                    to="/favorites"
+                    className="p-1 text-gray-600 hover:text-gray-800"
+                  >
+                    <HeartIcon className="size-6" />
+                  </Link>
+                ) : (
+                  <button
+                    className="p-1 text-gray-600 hover:text-gray-800"
+                    onClick={() => navigate('/signIn')}
+                  >
+                    <HeartIcon className="size-6" />
+                  </button>
+                )}
 
-                {/* Favorites */}
-                <Link
-                  to="/favorites"
-                  className="rounded-full p-1 text-gray-500 hover:text-gray-700 transition"
-                >
-                  <HeartIcon className="size-6" />
-                </Link>
+                {/* CART */}
+                {user ? (
+                  <button
+                    onClick={() => setCartOpen(true)}
+                    type="button"
+                    className="p-1 text-gray-600 hover:text-gray-800"
+                  >
+                    <ShoppingCartIcon className="size-6" />
+                  </button>
+                ) : (
+                  <button
+                    onClick={() => navigate('/signIn')}
+                    type="button"
+                    className="p-1 text-gray-600 hover:text-gray-800"
+                  >
+                    <ShoppingCartIcon className="size-6" />
+                  </button>
+                )}
 
-                {/* Profile */}
+                {/* PROFILE MENU */}
                 <Menu as="div" className="relative ml-3">
                   <MenuButton className="rounded-full">
                     <img
-                      src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                      src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
                       alt=""
                       className="size-8 rounded-full"
                     />
                   </MenuButton>
 
-                  <MenuItems className="absolute right-0 mt-2 w-48 rounded-md bg-white shadow-lg py-1 border border-gray-100 z-50">
+                  <MenuItems className="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-md border border-gray-100 py-1 z-50">
 
                     {user ? (
                       <>
@@ -148,14 +166,16 @@ export default function Header({ user, setCartOpen, setUser }) {
             </div>
           </div>
 
-          {/* Mobile panel */}
-          <DisclosurePanel className="sm:hidden space-y-1 px-4 pb-3">
-            <Link
-              to="/configurator"
-              className="block px-3 py-2 rounded-md bg-gray-100 text-gray-800"
-            >
-              Конфигуратор
-            </Link>
+          {/* MOBILE MENU */}
+          <DisclosurePanel className="sm:hidden">
+            <div className="space-y-1 px-2 pt-2 pb-3">
+              <Link
+                to="/configurator"
+                className="block rounded-md px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-100"
+              >
+                Конфигуратор
+              </Link>
+            </div>
           </DisclosurePanel>
         </>
       )}

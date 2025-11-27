@@ -1,4 +1,4 @@
-const { User, Cart, CartItem, SocksDesign } = require('../db/models');
+const { User, Cart, CartItem, SocksDesign, Color, Image, Pattern } = require('../db/models');
 
 class UserService {
   // Создание пользователя
@@ -37,8 +37,12 @@ class UserService {
                 model: CartItem,
                 as: 'items',
                 include: [
-                  { model: SocksDesign, as: 'design' }
-                ]
+                  {
+                    model: SocksDesign,
+                    as: 'design',
+                    include: [{ model: Color }, { model: Image }, { model: Pattern }],
+                  },
+                ],
               },
             ],
           },

@@ -9,6 +9,7 @@ import Footer from '../components/layout/Footer';
 import FavoritesPage from '../pages/FavoritesPage/FavoritesPage';
 import ConfiguratorPage from '../pages/ConfiguratorPage/ConfiguratorPage';
 import Cart from '../components/layout/Cart';
+import SignOutPage from '../pages/SignOutPage/SignOutPage';
 
 export default function App() {
   const [cartOpen, setCartOpen] = useState(false);
