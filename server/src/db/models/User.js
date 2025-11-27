@@ -3,7 +3,11 @@ const bcrypt = require('bcrypt');
 
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
-    static associate(models) {}
+    static associate(models) {
+      this.hasMany(models.SocksDesign, { foreignKey: 'user_id' });
+      this.hasMany(models.Favorite, { foreignKey: 'user_id' });
+      this.hasOne(models.Cart, { foreignKey: 'user_id' });
+    }
 
     static validateEmail(email) {
       const emailPattern = /^[A-z0-9._%+-]+@[A-z0-9.-]+\.[A-z]{2,}$/;
@@ -87,7 +91,9 @@ module.exports = (sequelize, DataTypes) => {
           user.password = await bcrypt.hash(user.password, 10);
           user.email = user.email.trim().toLowerCase();
         },
-        afterCreate: {},
+        afterCreate: (user) => {
+          delete user.get().password
+        },
       },
       modelName: 'User',
     },
