@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { axiosInstance } from '../../shared/lib/axiosInstance';
+import { useEffect, useState } from "react";
+import { axiosInstance } from "../../shared/lib/axiosInstance";
 
 export default function CartList({ user }) {
   const [cart, setCart] = useState([]);
@@ -8,9 +8,11 @@ export default function CartList({ user }) {
     (async () => {
       try {
         const response = await axiosInstance.get(`/users/${user.id}/cart`);
-        console.log(response.data.cart.items);
 
-        setCart(response.data.cart.items);
+        console.log("cart:", response.data);
+
+        // наш сервис возвращает массив CartItems
+        setCart(response.data);
       } catch (error) {
         console.log(error);
       }
@@ -21,7 +23,7 @@ export default function CartList({ user }) {
     try {
       await axiosInstance.delete(`/cart/items/${itemId}`);
 
-      setCart(prev => prev.filter(item => item.id !== itemId));
+      setCart((prev) => prev.filter((item) => item.id !== itemId));
     } catch (error) {
       console.log(error);
     }
@@ -35,8 +37,8 @@ export default function CartList({ user }) {
         quantity: newQuantity,
       });
 
-      setCart(prev =>
-        prev.map(item =>
+      setCart((prev) =>
+        prev.map((item) =>
           item.id === itemId ? { ...item, quantity: newQuantity } : item
         )
       );
@@ -47,59 +49,86 @@ export default function CartList({ user }) {
 
   return (
     <ul role="list" className="-my-6 divide-y divide-gray-200">
-      {cart.map((product) => (
-        <li key={product.id} className="flex py-6">
-          <div className="size-32 shrink-0 overflow-hidden rounded-md border border-gray-200">
-            <img alt="image" src={'bla'} className="size-full object-cover" />
-          </div>
+      {Array.isArray(cart) && cart.map((product) => {
+        const design = product.design;
 
-          <div className="ml-4 flex flex-1 flex-col">
-            <div>
-              <div className="flex justify-between text-base font-medium text-gray-900">
-                <h3>
-                  <a href={product.href}>Носки</a>
-                </h3>
-              </div>
-              <p className="mt-1 text-sm text-gray-500">
-                Цвет: {product.design.Color.title}
-              </p>
-              <p className="mt-1 text-sm text-gray-500">
-                Узор: {product.design.Pattern.title}
-              </p>
+        return (
+          <li key={product.id} className="flex py-6">
+            {/* PREVIEW */}
+            <div className="size-32 shrink-0 overflow-hidden rounded-md border border-gray-200">
+              <img
+                alt="preview"
+                src={design.preview || "/placeholder.png"}
+                className="size-full object-cover"
+              />
             </div>
-             <div className="flex flex-1 items-end justify-between text-sm">
-              
-              {/* КОЛИЧЕСТВО */}
-              <div className="flex items-center gap-2">
-                <button
-                  onClick={() => handleUpdateQuantity(product.id, product.quantity - 1)}
-                  className="px-2 py-1 bg-gray-200 rounded"
-                >
-                  –
-                </button>
 
-                <span>{product.quantity} шт</span>
+            {/* INFO */}
+            <div className="ml-4 flex flex-1 flex-col">
+              <div>
+                <div className="flex justify-between text-base font-medium text-gray-900">
+                  <h3>Носки</h3>
+                </div>
 
-                <button
-                  onClick={() => handleUpdateQuantity(product.id, product.quantity + 1)}
-                  className="px-2 py-1 bg-gray-200 rounded"
-                >
-                  +
-                </button>
+                <p className="mt-1 text-sm text-gray-500">
+                  Цвет: <span style={{ color: design.colorHex }}>{design.colorHex}</span>
+                </p>
+
+                <p className="mt-1 text-sm text-gray-500">
+                  Узор: {design.patternName || "нет"}
+                </p>
+
+                {design.patternColorHex && (
+                  <p className="mt-1 text-sm text-gray-500">
+                    Цвет узора:{" "}
+                    <span style={{ color: design.patternColorHex }}>
+                      {design.patternColorHex}
+                    </span>
+                  </p>
+                )}
+
+                {design.image && (
+                  <p className="mt-1 text-sm text-gray-500">
+                    Эмоджи: {design.image}
+                  </p>
+                )}
               </div>
 
-              {/* УДАЛИТЬ */}
-              <button
-                onClick={() => handleRemove(product.id)}
-                className="font-medium text-indigo-600 hover:text-indigo-500"
-              >
-                Удалить
-              </button>
+              {/* QUANTITY + REMOVE */}
+              <div className="flex flex-1 items-end justify-between text-sm mt-2">
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() =>
+                      handleUpdateQuantity(product.id, product.quantity - 1)
+                    }
+                    className="px-2 py-1 bg-gray-200 rounded"
+                  >
+                    –
+                  </button>
 
+                  <span>{product.quantity} шт</span>
+
+                  <button
+                    onClick={() =>
+                      handleUpdateQuantity(product.id, product.quantity + 1)
+                    }
+                    className="px-2 py-1 bg-gray-200 rounded"
+                  >
+                    +
+                  </button>
+                </div>
+
+                <button
+                  onClick={() => handleRemove(product.id)}
+                  className="font-medium text-indigo-600 hover:text-indigo-500"
+                >
+                  Удалить
+                </button>
+              </div>
             </div>
-          </div>
-        </li>
-      ))}
+          </li>
+        );
+      })}
     </ul>
   );
 }

@@ -7,19 +7,21 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      cart_id: {
+      user_id: {
+        allowNull: false,
         type: Sequelize.INTEGER,
-        references: { model: 'Carts', key: 'id' },
+        references: { model: 'Users', key: 'id' },
         onDelete: 'CASCADE'
       },
       design_id: {
+        allowNull: false,
         type: Sequelize.INTEGER,
         references: { model: 'SocksDesigns', key: 'id' },
         onDelete: 'CASCADE'
       },
       quantity: {
-        type: Sequelize.INTEGER,
         allowNull: false,
+        type: Sequelize.INTEGER,
         defaultValue: 1,
       },
       createdAt: {

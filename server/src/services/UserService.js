@@ -19,32 +19,18 @@ class UserService {
     }
   }
 
-  static async getUserCart(user_id) {
+  static async getUserCart(userId) {
     try {
-      const user = await User.findByPk(user_id, {
-        include: [
-          {
-            model: Cart,
-            as: 'cart',
-            include: [
-              {
-                model: CartItem,
-                as: 'items',
-                include: [
-                  {
-                    model: SocksDesign,
-                    as: 'design',
-                    include: [{ model: Color }, { model: Image }, { model: Pattern }],
-                  },
-                ],
-              },
-            ],
-          },
-        ],
+      const items = await CartItem.findAll({
+        where: { user_id },
+        include: [{ model: SocksDesign, as: 'design' }],
+        order: [['id', 'DESC']],
       });
-      return user?.cart || null;
+
+      return { items };
     } catch (error) {
-      return error.message;
+      console.error(error);
+      return null;
     }
   }
 }
