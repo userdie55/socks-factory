@@ -38,8 +38,8 @@ export default function App() {
       <main className="flex-1 flex">
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/configurator" element={<ConfiguratorPage />} />
-          <Route path="/favorites" element={<FavoritesPage />} />
+          <Route path="/configurator" element={<ConfiguratorPage user={user}/>} />
+          <Route path="/favorites" element={<FavoritesPage user={user}/>} />
           <Route path="/signUp" element={<SignUpPage setUser={setUser} />} />
           <Route path="/signIn" element={<SignInPage setUser={setUser} />} />
           <Route path="/signOut" element={<SignOutPage setUser={setUser} />} />

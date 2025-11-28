@@ -7,7 +7,7 @@ import PatternPicker from '../../widgets/ConfiguratorWidgets/Pattern/PatternPick
 import ColorPicker from '../../widgets/ConfiguratorWidgets/Color/ColorPick';
 import PatternColorPicker from '../../widgets/ConfiguratorWidgets/Pattern/PatternColorPick';
 
-export default function ConfiguratorPage({ openCart }) {
+export default function ConfiguratorPage({ openCart, user }) {
   const [color, setColor] = useState('#ffffff');
   const [pattern, setPattern] = useState(null);
   const [patternColor, setPatternColor] = useState('#ffffff');
@@ -31,7 +31,7 @@ export default function ConfiguratorPage({ openCart }) {
         emojiX,
         emojiY,
         preview,
-        user_id: 1,
+        user_id: user.id,
       };
 
       const response = await axiosInstance.post('/cart/add', payload);
@@ -60,10 +60,10 @@ export default function ConfiguratorPage({ openCart }) {
         emojiX: Math.round(emojiX),
         emojiY: Math.round(emojiY),
         preview,
-        user_id: 1,
+        user_id: user.id,
       };
 
-      const response = await axiosInstance.post('/favorites/', payload);
+      const response = await axiosInstance.post('/favorites', payload);
 
       console.log('Избранное добавлено:', response.data);
       alert('Добавлено в избранное!');

@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
 import { axiosInstance } from '../../shared/lib/axiosInstance';
 
-export default function FavoritesPage() {
+export default function FavoritesPage({ user }) {
   const [favorites, setFavorites] = useState([]);
+console.log(user);
 
   useEffect(() => {
-    axiosInstance.get('/favorites').then((res) => {
+    axiosInstance.get(`/favorites/${user.id}`).then((res) => {
       setFavorites(res.data);
     });
   }, []);
@@ -78,9 +79,15 @@ export default function FavoritesPage() {
               />
 
               <div className="text-gray-700 text-center mb-4">
-                <p><b>Цвет:</b> {design.colorHex}</p>
-                <p><b>Узор:</b> {design.patternName || '-'}</p>
-                <p><b>Emoji:</b> {design.image || '-'}</p>
+                <p>
+                  <b>Цвет:</b> {design.colorHex}
+                </p>
+                <p>
+                  <b>Узор:</b> {design.patternName || '-'}
+                </p>
+                <p>
+                  <b>Emoji:</b> {design.image || '-'}
+                </p>
               </div>
 
               {/* SHARE BUTTON */}
