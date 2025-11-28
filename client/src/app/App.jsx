@@ -10,6 +10,7 @@ import Cart from '../components/layout/Cart';
 import FavoritesPage from '../pages/FavoritesPage/FavoritesPage';
 import ConfiguratorPage from '../pages/ConfiguratorPage/ConfiguratorPage';
 import SignOutPage from '../pages/SignOutPage/SignOutPage';
+import ProfilePage from '../pages/ProfilePage/ProfilePage';
 
 export default function App() {
   const [cartOpen, setCartOpen] = useState(false);
@@ -28,18 +29,23 @@ export default function App() {
   }, []);
 
   return (
-    <div>
+    <div className="flex flex-col min-h-screen">
       <Header user={user} setCartOpen={setCartOpen} />
+
       <Cart open={cartOpen} setOpen={setCartOpen} user={user} />
 
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/configurator" element={<ConfiguratorPage />} />
-        <Route path="/favorites" element={<FavoritesPage />} />
-        <Route path="/signUp" element={<SignUpPage setUser={setUser} />} />
-        <Route path="/signIn" element={<SignInPage setUser={setUser} />} />
-        <Route path="/signOut" element={<SignOutPage setUser={setUser} />} />
-      </Routes>
+      {/* Контент тянется и занимает всё свободное пространство */}
+      <main className="flex-1 flex">
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/configurator" element={<ConfiguratorPage />} />
+          <Route path="/favorites" element={<FavoritesPage />} />
+          <Route path="/signUp" element={<SignUpPage setUser={setUser} />} />
+          <Route path="/signIn" element={<SignInPage setUser={setUser} />} />
+          <Route path="/signOut" element={<SignOutPage setUser={setUser} />} />
+          <Route path="/profile" element={<ProfilePage user={user} />} />
+        </Routes>
+      </main>
 
       <Footer />
     </div>

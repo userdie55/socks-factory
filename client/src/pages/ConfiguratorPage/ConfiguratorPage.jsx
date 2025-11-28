@@ -74,7 +74,7 @@ export default function ConfiguratorPage({ openCart }) {
   }
 
   return (
-    <div className="pt-24 px-6 flex justify-center">
+    <div className="flex flex-1 justify-center items-center">
       <div className="max-w-7xl w-full bg-white/50 p-10 rounded-3xl">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
           <EmojiPicker selected={emoji} onSelect={setEmoji} />

@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen pt-20">
+    <div className="flex flex-1 justify-center items-center">
 
       <main className="mx-auto max-w-5xl px-6 py-10">
         <div className="bg-white/70 backdrop-blur-lg border border-gray-200 rounded-2xl p-16 shadow-xl">
