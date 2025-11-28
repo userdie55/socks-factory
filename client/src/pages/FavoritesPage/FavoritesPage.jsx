@@ -15,6 +15,26 @@ export default function FavoritesPage() {
     setFavorites((prev) => prev.filter((fav) => fav.id !== id));
   }
 
+  // ---- SHARE FUNCTION ----
+  async function shareDesign(id) {
+    const url = `${window.location.origin}/design/${id}`;
+
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: 'Мой дизайн носков 👟',
+          text: 'Посмотри, какие носки я сделал!',
+          url,
+        });
+      } catch (err) {
+        console.log('Share canceled', err);
+      }
+    } else {
+      await navigator.clipboard.writeText(url);
+      alert('Ссылка скопирована! 📋');
+    }
+  }
+
   // ---------- ПУСТОЕ ИЗБРАННОЕ ----------
   if (favorites.length === 0) {
     return (
@@ -63,17 +83,15 @@ export default function FavoritesPage() {
                 <p><b>Emoji:</b> {design.image || '-'}</p>
               </div>
 
+              {/* SHARE BUTTON */}
               <button
-                onClick={() =>
-                  navigator.clipboard.writeText(
-                    `${window.location.origin}/design/${design.id}`
-                  )
-                }
+                onClick={() => shareDesign(design.id)}
                 className="px-6 py-2 rounded-xl bg-blue-400 text-white font-semibold shadow hover:bg-blue-500 transition"
               >
                 Поделиться
               </button>
 
+              {/* DELETE BUTTON */}
               <button
                 onClick={() => removeFavorite(fav.id)}
                 className="mt-2 px-6 py-2 rounded-xl bg-red-400 text-white font-semibold shadow hover:bg-red-500 transition"
