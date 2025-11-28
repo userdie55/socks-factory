@@ -1,0 +1,45 @@
+[33m2c78f25[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mdb-update[m[33m)[m HEAD@{0}: reset: moving to 2c78f25
+[33m2c78f25[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mdb-update[m[33m)[m HEAD@{1}: reset: moving to 2c78f25
+[33m6ebaff8[m[33m ([m[1;31morigin/db-update[m[33m)[m HEAD@{2}: commit: db-update-done
+[33m2c78f25[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mdb-update[m[33m)[m HEAD@{3}: commit: db-updated
+[33ma098615[m[33m ([m[1;31morigin/dev[m[33m, [m[1;31morigin/day-3[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mdev[m[33m, [m[1;32mday-3[m[33m)[m HEAD@{4}: checkout: moving from day-3 to db-update
+[33ma098615[m[33m ([m[1;31morigin/dev[m[33m, [m[1;31morigin/day-3[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mdev[m[33m, [m[1;32mday-3[m[33m)[m HEAD@{5}: checkout: moving from dev to day-3
+[33ma098615[m[33m ([m[1;31morigin/dev[m[33m, [m[1;31morigin/day-3[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mdev[m[33m, [m[1;32mday-3[m[33m)[m HEAD@{6}: commit: update
+[33m1b5ac3e[m[33m ([m[1;31morigin/release-2.0[m[33m)[m HEAD@{7}: pull: Fast-forward
+[33m330b753[m HEAD@{8}: checkout: moving from day-2 to dev
+[33m6802f40[m[33m ([m[1;31morigin/day-2[m[33m, [m[1;32mday-2[m[33m)[m HEAD@{9}: commit: day-2-done
+[33me78c3ac[m HEAD@{10}: commit: cart-done
+[33m30dd928[m HEAD@{11}: commit: more options
+[33mcdb2b25[m HEAD@{12}: commit: config+fav
+[33m4289d01[m HEAD@{13}: checkout: moving from create-cart to day-2
+[33me0422f9[m[33m ([m[1;31morigin/create-cart[m[33m, [m[1;32mcreate-cart[m[33m)[m HEAD@{14}: checkout: moving from content-update to create-cart
+[33mddb0d86[m[33m ([m[1;32mcontent-update[m[33m)[m HEAD@{15}: reset: moving to ORIG_HEAD
+[33m1f8d88c[m[33m ([m[1;31morigin/content-update[m[33m)[m HEAD@{16}: checkout: moving from front to content-update
+[33m340c5fd[m[33m ([m[1;32mfront[m[33m)[m HEAD@{17}: reset: moving to ORIG_HEAD
+[33mddb0d86[m[33m ([m[1;32mcontent-update[m[33m)[m HEAD@{18}: checkout: moving from content-update to front
+[33m1f8d88c[m[33m ([m[1;31morigin/content-update[m[33m)[m HEAD@{19}: pull: Fast-forward
+[33m340c5fd[m[33m ([m[1;32mfront[m[33m)[m HEAD@{20}: checkout: moving from create-cart to content-update
+[33me0422f9[m[33m ([m[1;31morigin/create-cart[m[33m, [m[1;32mcreate-cart[m[33m)[m HEAD@{21}: commit: cart-work
+[33m5efef57[m HEAD@{22}: commit (merge): Merge remote-tracking branch 'origin/db' into create-cart
+[33m0a642f9[m HEAD@{23}: commit: cart-sceleton
+[33m08c7f0b[m HEAD@{24}: reset: moving to HEAD
+[33m08c7f0b[m HEAD@{25}: commit: cart-sceleton
+[33m340c5fd[m[33m ([m[1;32mfront[m[33m)[m HEAD@{26}: checkout: moving from change-front-style to create-cart
+[33me80b885[m[33m ([m[1;31morigin/change-front-style[m[33m, [m[1;32mchange-front-style[m[33m)[m HEAD@{27}: commit: header + footer
+[33m5734d16[m HEAD@{28}: checkout: moving from change-front-style to change-front-style
+[33m5734d16[m HEAD@{29}: checkout: moving from release-1.0 to change-front-style
+[33m67541d7[m[33m ([m[1;31morigin/release-1.0[m[33m, [m[1;32mrelease-1.0[m[33m)[m HEAD@{30}: checkout: moving from change-front-style to release-1.0
+[33m5734d16[m HEAD@{31}: commit: new header
+[33m67541d7[m[33m ([m[1;31morigin/release-1.0[m[33m, [m[1;32mrelease-1.0[m[33m)[m HEAD@{32}: checkout: moving from registration-authorization to change-front-style
+[33m184d775[m[33m ([m[1;31morigin/registration-authorization[m[33m, [m[1;32mregistration-authorization[m[33m)[m HEAD@{33}: checkout: moving from dev to registration-authorization
+[33m330b753[m HEAD@{34}: checkout: moving from dev to dev
+[33m330b753[m HEAD@{35}: checkout: moving from registration-authorization to dev
+[33m184d775[m[33m ([m[1;31morigin/registration-authorization[m[33m, [m[1;32mregistration-authorization[m[33m)[m HEAD@{36}: pull: Fast-forward
+[33m8ebfc09[m HEAD@{37}: commit: connect server-client
+[33m25a7c00[m HEAD@{38}: pull: Fast-forward
+[33m7b280d8[m HEAD@{39}: checkout: moving from back to registration-authorization
+[33m7fcef45[m[33m ([m[1;32mback[m[33m)[m HEAD@{40}: commit: auth-routes
+[33m7b280d8[m HEAD@{41}: checkout: moving from dev to back
+[33m330b753[m HEAD@{42}: commit: setup
+[33m7b280d8[m HEAD@{43}: commit: project init
+[33m39a43b6[m[33m ([m[1;31morigin/main[m[33m)[m HEAD@{44}: clone: from github.com:userdie55/socks-factory.git

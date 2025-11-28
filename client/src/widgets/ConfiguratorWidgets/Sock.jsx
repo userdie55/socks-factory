@@ -8,6 +8,8 @@ import { applyColor } from "./Color/Color";
 import { generatePattern } from "./Pattern/Pattern";
 import { initEmojiDrag } from "./Image/ImageDrag";
 
+// ---------- ВАЖНО ----------
+// forwardRef ДОЛЖЕН быть ровно так!
 const SockCanvas = forwardRef(function SockCanvas(
   { color, pattern, patternColor, emoji },
   ref
@@ -15,14 +17,14 @@ const SockCanvas = forwardRef(function SockCanvas(
   const canvasRef = useRef(null);
   const sockImgRef = useRef(null);
 
-  // --- emoji position ---
+  // позиция emoji
   const emojiState = useRef({
     x: 200,
     y: 250,
     dragging: false,
   });
 
-  // --- refs for stable rendering ---
+  // refs для стабильных значений
   const emojiRef = useRef(null);
   const patternRef = useRef(null);
   const patternColorRef = useRef(null);
@@ -37,7 +39,7 @@ const SockCanvas = forwardRef(function SockCanvas(
     }
   }
 
-  // ---------- REF METHODS FOR PARENT ----------
+  // ---------- Методы для родителя ----------
   useImperativeHandle(ref, () => ({
     getPNG() {
       return canvasRef.current.toDataURL("image/png");
@@ -50,7 +52,7 @@ const SockCanvas = forwardRef(function SockCanvas(
     },
   }));
 
-  // ---------- Load base sock PNG ----------
+  // ---------- Загрузка PNG носка ----------
   useEffect(() => {
     const img = new Image();
     img.src = "/sock.png";
@@ -60,7 +62,7 @@ const SockCanvas = forwardRef(function SockCanvas(
     };
   }, []);
 
-  // ---------- Update refs instead of immediate draw ----------
+  // ---------- Обновление состояния ----------
   useEffect(() => {
     emojiRef.current = emoji;
     requestDraw();
@@ -77,20 +79,21 @@ const SockCanvas = forwardRef(function SockCanvas(
     requestDraw();
   }, [color]);
 
-  // ---------- Full draw function ----------
+  // ---------- Функция отрисовки ----------
   function draw() {
     needsRedraw.current = false;
 
     const canvas = canvasRef.current;
     if (!canvas || !sockImgRef.current) return;
 
-    const ctx = canvas.getContext("2d");
+    const ctx = canvas.getContext("2d", { willReadFrequently: true });
+
     const W = canvas.width;
     const H = canvas.height;
 
     ctx.clearRect(0, 0, W, H);
 
-    // sock transform
+    // Масштабирование носка
     const scale = 1.15;
     const drawW = W * scale;
     const drawH = H * scale;
@@ -99,13 +102,15 @@ const SockCanvas = forwardRef(function SockCanvas(
 
     ctx.drawImage(sockImgRef.current, offsetX, offsetY, drawW, drawH);
 
-    // ===== Color layer =====
+    // Получаем пиксели носка
     let imgData = ctx.getImageData(0, 0, W, H);
+
+    // === цвет ===
     if (colorRef.current) {
       applyColor(imgData, colorRef.current);
     }
 
-    // ===== Pattern layer =====
+    // === узор ===
     if (patternRef.current) {
       const pCanvas = generatePattern(
         patternRef.current,
@@ -131,7 +136,7 @@ const SockCanvas = forwardRef(function SockCanvas(
 
     ctx.putImageData(imgData, 0, 0);
 
-    // ===== Emoji =====
+    // === emoji ===
     if (emojiRef.current) {
       ctx.font = "64px serif";
       ctx.textAlign = "center";
@@ -144,7 +149,7 @@ const SockCanvas = forwardRef(function SockCanvas(
     }
   }
 
-  // ---------- Drag events ----------
+  // ---------- drag emoji ----------
   useEffect(() => {
     const canvas = canvasRef.current;
     const cleanup = initEmojiDrag(canvas, emojiState, requestDraw);
