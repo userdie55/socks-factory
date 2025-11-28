@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 export default function HomePage() {
   return (
     <div className="min-h-screen pt-20">
@@ -9,9 +11,9 @@ export default function HomePage() {
           </h2>
 
           <div className="flex justify-center">
-            <button className="px-8 py-3 rounded-full bg-gradient-to-r from-pink-400 via-purple-400 to-blue-400 text-white font-semibold shadow-md hover:scale-105 transition">
-              Перейти в конфигуратор
-            </button>
+            <Link to={'configurator'} className="px-8 py-3 rounded-full bg-gradient-to-r from-pink-400 via-purple-400 to-blue-400 text-white font-semibold shadow-md hover:scale-105 transition">
+              Перейти в конструктор
+            </Link>
           </div>
         </div>
       </main>
