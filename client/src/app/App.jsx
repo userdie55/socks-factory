@@ -10,7 +10,7 @@ import FavoritesPage from '../pages/FavoritesPage/FavoritesPage';
 import ConfiguratorPage from '../pages/ConfiguratorPage/ConfiguratorPage';
 import Cart from '../components/layout/Cart';
 import SignOutPage from '../pages/SignOutPage/SignOutPage';
-
+import ProfilePage from '../pages/ProfilePage/ProfilePage';
 export default function App() {
   const [cartOpen, setCartOpen] = useState(false);
   const [user, setUser] = useState(null);
@@ -40,6 +40,8 @@ export default function App() {
           <Route path="/signIn" element={<SignInPage setUser={setUser} />} />
           <Route path="/favorites" element={<FavoritesPage />} />
           <Route path="/configurator" element={<ConfiguratorPage />} />
+          <Route path="/signOut" element={<SignOutPage setUser={setUser} />} />
+          <Route path="/profile" element={<ProfilePage user={user}/>} />
         </Routes>
       </main>
 
