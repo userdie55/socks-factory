@@ -1,15 +1,28 @@
-import { useEffect, useRef } from "react";
+import {
+  useEffect,
+  useRef,
+  forwardRef,
+  useImperativeHandle,
+} from "react";
 import { applyColor } from "./Color/Color";
 import { generatePattern } from "./Pattern/Pattern";
 import { initEmojiDrag } from "./Image/ImageDrag";
 
-export default function SockCanvas({ color, pattern, patternColor, emoji }) {
+const SockCanvas = forwardRef(function SockCanvas(
+  { color, pattern, patternColor, emoji },
+  ref
+) {
   const canvasRef = useRef(null);
   const sockImgRef = useRef(null);
 
-  const emojiState = useRef({ x: 200, y: 250, dragging: false });
+  // --- emoji position ---
+  const emojiState = useRef({
+    x: 200,
+    y: 250,
+    dragging: false,
+  });
 
-  // ⭐ refs для стабильности во время drag
+  // --- refs for stable rendering ---
   const emojiRef = useRef(null);
   const patternRef = useRef(null);
   const patternColorRef = useRef(null);
@@ -24,7 +37,20 @@ export default function SockCanvas({ color, pattern, patternColor, emoji }) {
     }
   }
 
-  // Загружаем носок
+  // ---------- REF METHODS FOR PARENT ----------
+  useImperativeHandle(ref, () => ({
+    getPNG() {
+      return canvasRef.current.toDataURL("image/png");
+    },
+    getEmojiCoords() {
+      return {
+        x: emojiState.current.x,
+        y: emojiState.current.y,
+      };
+    },
+  }));
+
+  // ---------- Load base sock PNG ----------
   useEffect(() => {
     const img = new Image();
     img.src = "/sock.png";
@@ -34,7 +60,7 @@ export default function SockCanvas({ color, pattern, patternColor, emoji }) {
     };
   }, []);
 
-  // ⭐ синхронизируем РЕФЫ (а не draw напрямую)
+  // ---------- Update refs instead of immediate draw ----------
   useEffect(() => {
     emojiRef.current = emoji;
     requestDraw();
@@ -51,6 +77,7 @@ export default function SockCanvas({ color, pattern, patternColor, emoji }) {
     requestDraw();
   }, [color]);
 
+  // ---------- Full draw function ----------
   function draw() {
     needsRedraw.current = false;
 
@@ -63,6 +90,7 @@ export default function SockCanvas({ color, pattern, patternColor, emoji }) {
 
     ctx.clearRect(0, 0, W, H);
 
+    // sock transform
     const scale = 1.15;
     const drawW = W * scale;
     const drawH = H * scale;
@@ -71,14 +99,13 @@ export default function SockCanvas({ color, pattern, patternColor, emoji }) {
 
     ctx.drawImage(sockImgRef.current, offsetX, offsetY, drawW, drawH);
 
-    const imgData = ctx.getImageData(0, 0, W, H);
-
-    // === Цвет носка ===
+    // ===== Color layer =====
+    let imgData = ctx.getImageData(0, 0, W, H);
     if (colorRef.current) {
       applyColor(imgData, colorRef.current);
     }
 
-    // === Узор ===
+    // ===== Pattern layer =====
     if (patternRef.current) {
       const pCanvas = generatePattern(
         patternRef.current,
@@ -104,15 +131,20 @@ export default function SockCanvas({ color, pattern, patternColor, emoji }) {
 
     ctx.putImageData(imgData, 0, 0);
 
-    // === Эмоджи ===
+    // ===== Emoji =====
     if (emojiRef.current) {
       ctx.font = "64px serif";
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
-      ctx.fillText(emojiRef.current, emojiState.current.x, emojiState.current.y);
+      ctx.fillText(
+        emojiRef.current,
+        emojiState.current.x,
+        emojiState.current.y
+      );
     }
   }
 
+  // ---------- Drag events ----------
   useEffect(() => {
     const canvas = canvasRef.current;
     const cleanup = initEmojiDrag(canvas, emojiState, requestDraw);
@@ -127,4 +159,6 @@ export default function SockCanvas({ color, pattern, patternColor, emoji }) {
       className="rounded-xl border border-gray-200 shadow-md bg-transparent"
     />
   );
-}
+});
+
+export default SockCanvas;

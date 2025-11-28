@@ -80,18 +80,18 @@ class UserController {
   static async signOutUser(req, res) {
     try {
       return res.sendStatus(200).clearCookie('refreshToken');
-    } catch (message) {
+    } catch ({ message }) {
       return res.status(400).json({ error: message });
     }
   }
 
   static async getUserCart(req, res) {
     try {
-      const {id} = req.params
-      const cart = await UserService.getUserCart(id)
-      return res.status(200).json({cart})
-    } catch (error) {
-       return res.status(400).json({ error: message });
+      const { id } = req.params;
+      const cart = await UserService.getUserCart(id);
+      return res.status(200).json(cart);
+    } catch ({ message }) {
+      return res.status(400).json({ error: message });
     }
   }
 }
