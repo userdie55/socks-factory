@@ -62,7 +62,7 @@ export default function SignUpForm({setUser}) {
 
           <button
             type="submit"
-            className="mt-4 px-6 py-3 rounded-full bg-gradient-to-r from-pink-400 via-purple-400 to-blue-400 text-white font-semibold shadow-md hover:shadow-lg transition"
+            className="mt-4 px-6 py-3 rounded-full bg-gradient-to-r from-pink-400 via-purple-400 to-blue-400 text-white font-semibold shadow-md hover:scale-105 transition"
           >
             Зарегистрироваться
           </button>

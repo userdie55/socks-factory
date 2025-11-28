@@ -9,7 +9,7 @@ export default function HomePage() {
           </h2>
 
           <div className="flex justify-center">
-            <button className="px-8 py-3 rounded-full bg-gradient-to-r from-pink-400 via-purple-400 to-blue-400 text-white font-semibold shadow-md hover:shadow-lg transition">
+            <button className="px-8 py-3 rounded-full bg-gradient-to-r from-pink-400 via-purple-400 to-blue-400 text-white font-semibold shadow-md hover:scale-105 transition">
               Перейти в конфигуратор
             </button>
           </div>

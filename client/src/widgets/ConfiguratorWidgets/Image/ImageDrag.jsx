@@ -1,5 +1,3 @@
-// widgets/emojiDrag.js
-
 export function initEmojiDrag(canvas, emojiState, redraw) {
   function onMouseDown(e) {
     const rect = canvas.getBoundingClientRect();
@@ -20,8 +18,8 @@ export function initEmojiDrag(canvas, emojiState, redraw) {
     emojiState.current.x = e.clientX - rect.left;
     emojiState.current.y = e.clientY - rect.top;
 
-    // ВАЖНО: перерисовываем в следующем кадре
-    requestAnimationFrame(redraw);
+    // здесь достаточно просто:
+    redraw();
   }
 
   function onMouseUp() {

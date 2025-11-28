@@ -1,77 +1,98 @@
-// widgets/SockCanvas.jsx
 import { useEffect, useRef } from "react";
 import { applyColor } from "./Color/Color";
 import { generatePattern } from "./Pattern/Pattern";
 import { initEmojiDrag } from "./Image/ImageDrag";
 
-export default function SockCanvas({ color, pattern, emoji }) {
+export default function SockCanvas({ color, pattern, patternColor, emoji }) {
   const canvasRef = useRef(null);
   const sockImgRef = useRef(null);
 
-  // Теперь emoji хранится ТУТ, стабильно
-  const emojiState = useRef({
-    x: 200,
-    y: 250,
-    dragging: false,
-    emoji: null, // <-- тут лежит текущий смайл
-  });
+  const emojiState = useRef({ x: 200, y: 250, dragging: false });
 
-  // Загружаем картинку носка
+  // ⭐ refs для стабильности во время drag
+  const emojiRef = useRef(null);
+  const patternRef = useRef(null);
+  const patternColorRef = useRef(null);
+  const colorRef = useRef(null);
+
+  const needsRedraw = useRef(false);
+
+  function requestDraw() {
+    if (!needsRedraw.current) {
+      needsRedraw.current = true;
+      requestAnimationFrame(draw);
+    }
+  }
+
+  // Загружаем носок
   useEffect(() => {
-    const sockImg = new Image();
-    sockImg.src = "/sock.png";
-    sockImg.onload = () => {
-      sockImgRef.current = sockImg;
-      draw();
+    const img = new Image();
+    img.src = "/sock.png";
+    img.onload = () => {
+      sockImgRef.current = img;
+      requestDraw();
     };
   }, []);
 
-  // Когда ИЗМЕНИЛИ emoji в UI → обновляем emojiState
+  // ⭐ синхронизируем РЕФЫ (а не draw напрямую)
   useEffect(() => {
-    emojiState.current.emoji = emoji;
-    draw();
+    emojiRef.current = emoji;
+    requestDraw();
   }, [emoji]);
 
-  // Цвет или паттерн → тоже перерисовать
   useEffect(() => {
-    draw();
-  }, [color, pattern]);
+    patternRef.current = pattern;
+    patternColorRef.current = patternColor;
+    requestDraw();
+  }, [pattern, patternColor]);
+
+  useEffect(() => {
+    colorRef.current = color;
+    requestDraw();
+  }, [color]);
 
   function draw() {
+    needsRedraw.current = false;
+
     const canvas = canvasRef.current;
     if (!canvas || !sockImgRef.current) return;
 
     const ctx = canvas.getContext("2d");
-    const sockImg = sockImgRef.current;
-
     const W = canvas.width;
     const H = canvas.height;
 
     ctx.clearRect(0, 0, W, H);
 
-    // Масштаб носка
     const scale = 1.15;
     const drawW = W * scale;
     const drawH = H * scale;
     const offsetX = (W - drawW) / 2;
     const offsetY = (H - drawH) / 2;
 
-    ctx.drawImage(sockImg, offsetX, offsetY, drawW, drawH);
+    ctx.drawImage(sockImgRef.current, offsetX, offsetY, drawW, drawH);
 
-    // Получаем пиксели
     const imgData = ctx.getImageData(0, 0, W, H);
 
-    // Окраска пикселей носка
-    applyColor(imgData, color);
+    // === Цвет носка ===
+    if (colorRef.current) {
+      applyColor(imgData, colorRef.current);
+    }
 
-    // Паттерн
-    if (pattern) {
-      const patternCanvas = generatePattern(pattern, W, H);
-      const pData = patternCanvas
+    // === Узор ===
+    if (patternRef.current) {
+      const pCanvas = generatePattern(
+        patternRef.current,
+        W,
+        H,
+        patternColorRef.current
+      );
+
+      const pData = pCanvas
         .getContext("2d")
         .getImageData(0, 0, W, H).data;
 
       const d = imgData.data;
+
       for (let i = 0; i < d.length; i += 4) {
         if (d[i + 3] > 0) {
           d[i] = d[i] * 0.7 + pData[i] * 0.3;
@@ -83,25 +104,18 @@ export default function SockCanvas({ color, pattern, emoji }) {
 
     ctx.putImageData(imgData, 0, 0);
 
-    // === ЭМОДЗИ НА ВЕРХУ ===
-    const currentEmoji = emojiState.current.emoji;
-
-    if (currentEmoji) {
+    // === Эмоджи ===
+    if (emojiRef.current) {
       ctx.font = "64px serif";
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
-      ctx.fillText(
-        currentEmoji,
-        emojiState.current.x,
-        emojiState.current.y
-      );
+      ctx.fillText(emojiRef.current, emojiState.current.x, emojiState.current.y);
     }
   }
 
-  // Подключаем drag
   useEffect(() => {
     const canvas = canvasRef.current;
-    const cleanup = initEmojiDrag(canvas, emojiState, draw);
+    const cleanup = initEmojiDrag(canvas, emojiState, requestDraw);
     return cleanup;
   }, []);
 
