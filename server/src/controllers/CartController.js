@@ -7,7 +7,8 @@ class CartController {
       if (!userId) return res.status(400).json({ message: "User id required" });
 
       const designData = req.body;
-
+      //console.log(req.body);
+      
       const cartItem = await CartService.addToCart(userId, designData);
 
       res.json(cartItem);

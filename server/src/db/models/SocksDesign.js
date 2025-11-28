@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
       colorHex: DataTypes.STRING,
       patternName: DataTypes.STRING,
       patternColorHex: DataTypes.STRING,
-      image: DataTypes.STRING,
+      image: DataTypes.TEXT,
       imageX: DataTypes.INTEGER,
       imageY: DataTypes.INTEGER,
       preview: DataTypes.TEXT,
