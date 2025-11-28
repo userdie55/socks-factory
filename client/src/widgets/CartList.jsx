@@ -16,12 +16,15 @@ export default function CartList({ user }) {
       }
     })();
   }, [user]);
-
+  
+  if (!cart || !cart.items) {
+    return null;
+  }
   async function handleRemove(itemId) {
     try {
       await axiosInstance.delete(`/cart/items/${itemId}`);
 
-      setCart(prev => prev.filter(item => item.id !== itemId));
+      setCart((prev) => prev.filter((item) => item.id !== itemId));
     } catch (error) {
       console.log(error);
     }
@@ -35,10 +38,10 @@ export default function CartList({ user }) {
         quantity: newQuantity,
       });
 
-      setCart(prev =>
-        prev.map(item =>
-          item.id === itemId ? { ...item, quantity: newQuantity } : item
-        )
+      setCart((prev) =>
+        prev.map((item) =>
+          item.id === itemId ? { ...item, quantity: newQuantity } : item,
+        ),
       );
     } catch (error) {
       console.log(error);
@@ -67,8 +70,7 @@ export default function CartList({ user }) {
                 Узор: {product.design.Pattern.title}
               </p>
             </div>
-             <div className="flex flex-1 items-end justify-between text-sm">
-              
+            <div className="flex flex-1 items-end justify-between text-sm">
               {/* КОЛИЧЕСТВО */}
               <div className="flex items-center gap-2">
                 <button
@@ -95,7 +97,6 @@ export default function CartList({ user }) {
               >
                 Удалить
               </button>
-
             </div>
           </div>
         </li>

@@ -1,57 +1,62 @@
 import axios from 'axios';
 
 export const axiosInstance = axios.create({
-    baseURL: import.meta.env.VITE_API_URL,
+    baseURL: import.meta.env.VITE_API_URL,      // должно быть http://localhost:3000/api
     headers: { 'Content-Type': 'application/json' },
-    withCredentials: true, // для передачи cookies с refresh token
+    withCredentials: true,
 });
 
-// переменная для хранения access token
+// accessToken хранится в памяти
 let accessToken = '';
 
-// функция для установки access token
+// обновляем токен
 export function setAccessToken(token) {
     accessToken = token;
 }
 
-// перехватчик запросов - добавляет Authorization заголовок
+// каждый запрос → добавляем Authorization
 axiosInstance.interceptors.request.use((config) => {
-    if (accessToken && !config.headers.authorization) {
-        config.headers.authorization = `Bearer ${accessToken}`;
+    if (accessToken) {
+        config.headers.Authorization = `Bearer ${accessToken}`;
     }
     return config;
 });
 
-// перехватчик ответов - автоматическое обновление токенов
+// перехватчик ошибок
 axiosInstance.interceptors.response.use(
-    (response) => response,
+    (res) => res,
     async (error) => {
-        const prevRequest = error.config;
+        const originalRequest = error.config;
 
-        // если токен истек и это первый запрос на обновление
-        if (error.response?.status === 403 && !prevRequest.sent) {
+        // если токен истёк (403) и мы ещё не пытались обновить
+        if (error.response?.status === 403 && !originalRequest._retry) {
+            originalRequest._retry = true;
+
             try {
-                // запрос на обновление токенов
-                const response = await axiosInstance.get('/auth/refreshToken');
-                const newAccessToken = response.data.data.accessToken;
+                // 🔥 ВАЖНО: правильный путь к refreshToken
+                const res = await axiosInstance.get('/auth/refreshToken');
 
-                // обновляем токен
-                setAccessToken(newAccessToken);
+                const newToken = res.data.accessToken;
 
-                // помечаем запрос как повторный
-                prevRequest.sent = true;
-                prevRequest.headers.authorization = `Bearer ${newAccessToken}`;
+                if (!newToken) {
+                    throw new Error('Refresh returned no token');
+                }
 
-                // повторяем оригинальный запрос
-                return axiosInstance(prevRequest);
-            } catch (refreshError) {
-                // если обновление не удалось, перенаправляем на авторизацию
+                setAccessToken(newToken);
+
+                originalRequest.headers.Authorization = `Bearer ${newToken}`;
+
+                return axiosInstance(originalRequest);
+
+            } catch (err) {
+                // refresh не сработал → отправляем на логин
                 setAccessToken('');
                 window.location.href = '/signIn';
-                return Promise.reject(refreshError);
+                return Promise.reject(err);
             }
         }
 
         return Promise.reject(error);
     }
 );
+

@@ -14,10 +14,7 @@ export default function SignUpForm({ setUser }) {
     try {
       event.preventDefault();
 
-      const response = await axiosInstance.post(
-        'http://localhost:3000/api/auth/signup',
-        inputs,
-      );
+      const response = await axiosInstance.post('/auth/signup', inputs);
 
       setUser(response.data.user);
       setAccessToken(response.data.accessToken);
@@ -32,7 +29,9 @@ export default function SignUpForm({ setUser }) {
   return (
     <div className="min-h-screen flex justify-center items-center">
       <div className="bg-white/70 backdrop-blur-lg p-10 rounded-2xl w-full max-w-md border border-gray-200 shadow-xl">
-        <h2 className="text-3xl font-semibold mb-8 text-center text-gray-800">Регистрация</h2>
+        <h2 className="text-3xl font-semibold mb-8 text-center text-gray-800">
+          Регистрация
+        </h2>
 
         <form className="flex flex-col gap-4" onSubmit={registrationHandler}>
           <input

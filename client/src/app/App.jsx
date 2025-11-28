@@ -29,7 +29,6 @@ export default function App() {
 
   return (
     <div className="min-h-screen flex flex-col">
-
       <Header user={user} setUser={setUser} setCartOpen={setCartOpen} />
       <Cart open={cartOpen} setOpen={setCartOpen} user={user} />
 
