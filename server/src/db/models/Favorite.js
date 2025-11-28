@@ -1,4 +1,5 @@
 const { Model } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
   class Favorite extends Model {
     static associate(models) {
@@ -6,6 +7,7 @@ module.exports = (sequelize, DataTypes) => {
       this.belongsTo(models.SocksDesign, { foreignKey: 'design_id' });
     }
   }
+
   Favorite.init(
     {
       user_id: DataTypes.INTEGER,
@@ -16,5 +18,6 @@ module.exports = (sequelize, DataTypes) => {
       modelName: 'Favorite',
     },
   );
+
   return Favorite;
 };
