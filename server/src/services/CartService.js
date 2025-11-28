@@ -23,8 +23,8 @@ class CartService {
         patternName,
         patternColorHex,
         image: emoji,
-        imageX: emojiX,
-        imageY: emojiY,
+        imageX: Math.round(emojiX),
+        imageY: Math.round(emojiY),
         preview,
       });
     }
