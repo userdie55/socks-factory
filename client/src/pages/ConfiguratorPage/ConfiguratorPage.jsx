@@ -24,7 +24,7 @@ export default function ConfiguratorPage({ openCart }) {
         colorHex: color,
         patternName: pattern || '',
         patternColorHex: patternColor || '',
-        emoji: emoji || "",
+        emoji: emoji || '',
         emojiX,
         emojiY,
         preview,

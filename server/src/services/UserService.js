@@ -22,12 +22,12 @@ class UserService {
   static async getUserCart(userId) {
     try {
       const items = await CartItem.findAll({
-        where: { user_id },
+        where: { user_id: userId },
         include: [{ model: SocksDesign, as: 'design' }],
         order: [['id', 'DESC']],
       });
 
-      return { items };
+      return items;
     } catch (error) {
       console.error(error);
       return null;
