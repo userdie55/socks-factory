@@ -1,10 +1,10 @@
-const FavoritesService = require("../services/FavoritesService");
+const FavoritesService = require('../services/FavoritesService');
 
 class FavoritesController {
   static async getFavorites(req, res) {
     try {
-      const userId = req.user?.id || 1;
-      const items = await FavoritesService.getUserFavorites(userId);
+      const { id } = req.params;
+      const items = await FavoritesService.getUserFavorites(id);
 
       res.json(items);
     } catch (error) {
@@ -16,8 +16,9 @@ class FavoritesController {
     try {
       const userId = req.user?.id || req.body.user_id;
       if (!userId) {
-        return res.status(400).json({ error: "User id required" });
+        return res.status(400).json({ error: 'User id required' });
       }
+      console.log(req.body);
 
       const data = req.body;
       const favorite = await FavoritesService.addToFavorites(userId, data);
