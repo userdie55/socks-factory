@@ -26,7 +26,7 @@ export default function SignInForm({ setUser }) {
   }
 
   return (
-    <div className="min-h-screen flex justify-center items-center">
+    <div className="flex flex-1 justify-center items-center">
       <div className="bg-white/70 backdrop-blur-lg p-10 rounded-2xl w-full max-w-md border border-gray-200 shadow-xl">
         <h2 className="text-3xl font-semibold mb-8 text-center text-gray-800">Войти</h2>
 
