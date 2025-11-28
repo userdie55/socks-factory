@@ -7,25 +7,33 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      user_id: {
-        type: Sequelize.INTEGER,
-        references: { model: 'Users', key: 'id' },
-        onDelete: 'CASCADE'
+      colorHex: {
+        allowNull: false,
+        type: Sequelize.STRING,
       },
-      color_id: {
-        type: Sequelize.INTEGER,
-        references: { model: 'Colors', key: 'id' },
-        onDelete: 'CASCADE'
+      patternName: {
+        allowNull: false,
+        type: Sequelize.STRING,
       },
-      image_id: {
-        type: Sequelize.INTEGER,
-        references: { model: 'Images', key: 'id' },
-        onDelete: 'CASCADE'
+      patternColorHex: {
+        allowNull: false,
+        type: Sequelize.STRING,
       },
-      pattern_id: {
+      image: {
+        allowNull: false,
+        type: Sequelize.TEXT,
+      },
+      imageX: {
+        allowNull: false,
         type: Sequelize.INTEGER,
-        references: { model: 'Patterns', key: 'id' },
-        onDelete: 'CASCADE'
+      },
+      imageY: {
+        allowNull: false,
+        type: Sequelize.INTEGER,   
+      },
+      preview: {
+        allowNull: false,
+        type: Sequelize.TEXT,
       },
       createdAt: {
         allowNull: false,

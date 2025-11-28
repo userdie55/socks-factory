@@ -56,7 +56,7 @@ export default function Header({ user, setCartOpen }) {
                   aria-current="page"
                   className="px-3 py-2 rounded-md hover:bg-pink-50 hover:text-pink-500 cursor-pointer transition"
                 >
-                  Конфигуратор
+                  Конструктор
                 </Link>
               </div>
             </div>

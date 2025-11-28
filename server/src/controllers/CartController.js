@@ -1,6 +1,23 @@
 const CartService = require('../services/CartService');
 
 class CartController {
+  static async addToCart(req, res) {
+    try {
+      const userId = req.user?.id || req.body.user_id;
+      if (!userId) return res.status(400).json({ message: "User id required" });
+
+      const designData = req.body;
+      //console.log(req.body);
+      
+      const cartItem = await CartService.addToCart(userId, designData);
+
+      res.json(cartItem);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: error.message });
+    }
+  }
+
   static async updateQuantity(req, res) {
     try {
       const { id } = req.params;
